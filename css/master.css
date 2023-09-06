@@ -1,0 +1,372 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
+:root {
+  --blue-gradient1: rgba(202, 240, 248, 1);
+  --blue-gradient2: rgba(144, 224, 239, 1);
+  --blue-gradient3: rgba(0, 180, 216, 1);
+  --blue-gradient4: rgba(0, 119, 182, 1);
+  --blue-gradient5: rgba(3, 4, 94, 1);
+  --gray-gradient1: 32, 32, 32;
+  --gray-gradient2: 51, 53, 51;
+  --card-color: 70, 73, 66;
+  --yellow: #ffc300;
+  --padding-xs: 1rem;
+  --margin-xs: var(--padding-xs);
+  --padding-lg: 1rem;
+  --margin-lg: var(--padding-lg);
+}
+
+body {
+  /* background: rgb(202, 240, 248);
+  background: radial-gradient(
+    circle,
+    var(--blue-gradient1) 0%,
+    var(--blue-gradient2) 20%,
+    var(--blue-gradient3) 40%,
+    var(--blue-gradient4) 60%,
+    var(--blue-gradient5) 100%
+  ); */
+  background: hsla(0, 0%, 49%, 1);
+  background: radial-gradient(
+    circle,
+    rgb(var(--gray-gradient2)),
+    rgb(var(--gray-gradient1))
+  );
+  background: -moz-radial-gradient(
+    circle,
+    rgb(var(--gray-gradient2)),
+    rgb(var(--gray-gradient1))
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgb(var(--gray-gradient2)),
+    rgb(var(--gray-gradient1))
+  );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#7D7D7D", endColorstr="#393939", GradientType=1 );
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  min-height: 100vh;
+  padding: var(--padding-xs);
+  font-size: 2rem;
+  padding-top: 100px;
+}
+
+.body-inner {
+  background: url('/images/sunset-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+header {
+  height: auto;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--yellow);
+  margin: 2rem auto;
+}
+
+header h1 {
+  text-shadow: 1px 1px 5px black;
+}
+
+main {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  align-items: center;
+  justify-content: center;
+}
+
+form .btn {
+  font-size: 1.5rem;
+  width: 100%;
+}
+
+.form-select {
+  font-size: 2rem;
+  margin: var(--margin-xs) auto;
+}
+
+/* Preloader Start */
+.lds-ring {
+  display: block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 10px auto;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Preloader End */
+
+#converter {
+  width: 100%;
+  background: rgba(30, 30, 30, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 2rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.check-box {
+  transform: scale(1.5);
+  transform-origin: 100% 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  color: #fff;
+}
+
+.check-box span {
+  margin-left: 20px;
+  font-size: 1.2rem;
+}
+
+input[type='checkbox'] {
+  position: relative;
+  appearance: none;
+  width: 80px;
+  height: 40px;
+  background: #ccc;
+  border-radius: 50px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+input:checked[type='checkbox'] {
+  background: #7da6ff;
+}
+
+input[type='checkbox']::after {
+  position: absolute;
+  content: '';
+  width: 40px;
+  height: 40px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+  transition: 0.4s;
+}
+
+input:checked[type='checkbox']::after {
+  left: 50%;
+}
+
+#weather {
+  margin-top: var(--margin-xs);
+  display: grid;
+  gap: calc(var(--margin-xs) * 2);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-auto-flow: row;
+  grid-auto-columns: minmax(100%, 1fr);
+}
+
+#weather .temp-msg {
+  grid-column: span 2;
+  color: #ccc;
+}
+
+#weather > div.weather-card {
+  flex-grow: 1;
+  background: rgba(var(--gray-gradient2, 0.5));
+  color: white;
+  border-radius: 20px;
+  border: 10px solid rgba(var(--gray-gradient2), 0.5);
+  overflow: hidden;
+}
+
+.weather-card__header {
+  background-color: rgba(var(--card-color), 0.8);
+  padding: var(--padding-xs);
+}
+
+.weather-card__body {
+  padding: var(--padding-xs);
+}
+
+.weather-card__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--padding-xs) 0rem;
+}
+
+.weather-card__image img {
+  text-align: center;
+  width: 40%;
+  height: 40%;
+}
+
+.weather-card__body h3 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: var(--margin-xs);
+}
+
+footer {
+  margin-top: auto;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  margin: 6rem auto 2rem auto;
+  color: #d6d6d6;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 0rem;
+    padding-top: 60px;
+    font-size: 1rem;
+  }
+  header {
+    height: 100px;
+    max-height: 100px;
+    font-size: 2rem;
+  }
+
+  main {
+    display: flex;
+    position: relative;
+  }
+
+  form .btn {
+    font-size: 1rem;
+  }
+
+  .form-select {
+    font-size: 1rem;
+    margin: 2rem auto;
+  }
+
+  #converter {
+    width: 100%;
+    padding: 0rem;
+    z-index: 10;
+  }
+
+  .check-box {
+    transform: scale(0.9);
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    width: auto;
+  }
+
+  .check-box span {
+    margin-top: 0px;
+    margin-left: 10px;
+  }
+
+  #weather {
+    margin-top: 1rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  #weather .temp-msg {
+    grid-column: span 3;
+  }
+
+  .weather-card__header {
+    padding: var(--padding-lg);
+  }
+
+  .weather-card__body {
+    padding: var(--padding-lg);
+  }
+
+  .weather-card__image {
+    padding: var(--padding-lg) 0rem;
+  }
+
+  .weather-card__image img {
+    width: 50%;
+    height: 50%;
+  }
+
+  .weather-card__body h3 {
+    font-size: 1.2rem;
+  }
+
+  footer {
+    height: 60px;
+    max-height: 60px;
+    margin: 1rem auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  #converter {
+    width: auto;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 1rem;
+  }
+
+  .check-box {
+    transform: scale(0.9);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+  }
+
+  .check-box span {
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+
+  #weather {
+    margin-top: 1rem;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  #weather .temp-msg {
+    grid-column: span 7;
+  }
+}
