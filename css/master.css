@@ -340,6 +340,17 @@ footer {
 }
 
 @media (min-width: 1200px) {
+  #weather {
+    margin-top: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  #weather .temp-msg {
+    grid-column: span 4;
+  }
+}
+
+@media (min-width: 1400px) {
   #converter {
     width: auto;
     background: transparent;

@@ -3,6 +3,8 @@ let lat, lon, opt, value;
 const citiesDropdown = document.querySelector('#cities');
 const weatherDiv = document.querySelector('#weather');
 const convertBtn = document.querySelector('#converter');
+
+//Check if localStorage is empty, if so, set default unit to Celsius
 let isCelsius;
 if (localStorage.getItem('isCelsius') === null) {
   localStorage.setItem('isCelsius', true);
@@ -10,6 +12,7 @@ if (localStorage.getItem('isCelsius') === null) {
   isCelsius = JSON.parse(localStorage.getItem('isCelsius')); //Default unit from API is Celsius;
 }
 
+// For readability, I have created a translation and icon object for the weather types
 let weatherTypeTranslation = {
   clear: {
     name: 'Clear',
@@ -83,6 +86,7 @@ let weatherTypeTranslation = {
 
 let weatherDataParsed = {};
 
+// Get the CSV file and parse it using Papa Parse
 const csvResponse = fetch('city_coordinates.csv')
   .then((response) => response.text())
   .then((v) => Papa.parse(v))
@@ -90,6 +94,8 @@ const csvResponse = fetch('city_coordinates.csv')
 
 csvResponse.then((v) => {
   data = v;
+
+  // Create the dropdown list of cities
   for (var i = 1; i < data.data.length; i++) {
     var opt = document.createElement('option');
     opt.value = data.data[i][2];
@@ -100,6 +106,7 @@ csvResponse.then((v) => {
   }
 });
 
+// Get the weather data from the API when city is selected
 const getWeather = (select) => {
   opt = select.options[select.selectedIndex];
   lat = opt.dataset.lat;
@@ -118,6 +125,7 @@ const getWeather = (select) => {
       const weatherData = JSON.parse(request.response);
       const objData = weatherData.dataseries;
 
+      // Iterate through the weather data and create a new object with readable data. Farenheit is calculated from Celsius and added to the object. This is done to avoid having to calculate it every time the user switches units.
       for (var i in objData) {
         weatherDataParsed[i] = {
           date: moment(objData[i].date, 'YYYYMMDD').format('ddd, MMM DD'),
@@ -162,6 +170,7 @@ const showWeather = (weatherData) => {
   updateTemp();
 };
 
+// Event listener for the unit converter toggle switch
 const convertUnits = () => {
   isCelsius = !isCelsius;
   localStorage.setItem('isCelsius', isCelsius);
@@ -169,21 +178,17 @@ const convertUnits = () => {
 };
 convertBtn.addEventListener('click', convertUnits);
 
+// Function to update the temperature units and visual styles. This is to avoid re-rendering the entire page.
 const updateTemp = () => {
-  console.log('isCelsius is ' + isCelsius);
   if (isCelsius) {
     console.log('in true statement');
     $('#converterCheckbox').prop('checked', true);
-    $('.celsius').css('display', 'inline-block');
     $('.celsius').removeClass('visually-hidden');
-    $('.farenheit').css('display', 'none');
     $('.farenheit').addClass('visually-hidden');
   } else {
     console.log('in false statement');
     $('#converterCheckbox').prop('checked', false);
-    $('.celsius').css('display', 'none');
     $('.celsius').addClass('visually-hidden');
-    $('.farenheit').css('display', 'inline-block');
     $('.farenheit').removeClass('visually-hidden');
   }
 };
@@ -193,4 +198,5 @@ function celsiusToFahrenheit(celsius) {
   return (celsius * 9) / 5 + 32;
 }
 
+// update toggle switch on first load based on localStorage
 updateTemp();
